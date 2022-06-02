@@ -11,7 +11,7 @@ public class MainUI extends JFrame {
     //Attribute
     private int width = 700;
     private int height = 500;
-    private JButton btnQuanLy, btnDanhSach, btnThongTin, btnThoat;
+    private JButton btnQuanLy, btnDanhSach, btnThongTin, btnThoat, btnCapNhat, btnCLB;
 
     //Constructor
     public MainUI(){
@@ -25,12 +25,12 @@ public class MainUI extends JFrame {
         //Tao khu vuc hien thi thong tin project
         JPanel pnThongTin = new JPanel();
         pnThongTin.setLayout(new BorderLayout());
-        pnThongTin.setPreferredSize(new Dimension(0, 120));
+        pnThongTin.setPreferredSize(new Dimension(0, 200));
         pnThongTin.setBackground(new Color(93, 167, 232));
         JLabel lbThongTin = new JLabel("Quản lý sinh viên");
         lbThongTin.setHorizontalAlignment(JLabel.CENTER);
         lbThongTin.setVerticalAlignment(JLabel.CENTER);
-        lbThongTin.setFont(new Font("Bahnschrift", Font.BOLD, 40));
+        lbThongTin.setFont(new Font("Bahnschrift", Font.BOLD, 50));
         //lbThongTin.setForeground(Color.WHITE);
         JLabel lbCreatedBy = new JLabel("Created by nhp1807");
         lbCreatedBy.setHorizontalAlignment(JLabel.CENTER);
@@ -54,8 +54,13 @@ public class MainUI extends JFrame {
 
         //Tao khu vuc hien thi cac nut chuc nang
         JPanel pnChucNang = new JPanel();
-        pnChucNang.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-
+        pnChucNang.setLayout(new BoxLayout(pnChucNang, BoxLayout.Y_AXIS));
+        JPanel pn1 = new JPanel();
+        pn1.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        pn1.setBackground(new Color(165, 213, 255));
+        JPanel pn2 = new JPanel();
+        pn2.setBackground(new Color(165, 213, 255));
+        pn2.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
         btnQuanLy = new JButton("Quản lý");
         btnQuanLy.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/home.png"))));
         btnDanhSach = new JButton("Danh sách");
@@ -64,15 +69,31 @@ public class MainUI extends JFrame {
         btnThongTin.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/info.png"))));
         btnThoat = new JButton("Thoát");
         btnThoat.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/exit.png"))));
+        btnCLB = new JButton("CLB");
+        btnCLB.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/team.png"))));
+        btnCapNhat = new JButton("Cập nhật");
+        btnCapNhat.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/update.png"))));
         customButton(btnQuanLy);
         customButton(btnDanhSach);
         customButton(btnThongTin);
         customButton(btnThoat);
+        customButton(btnCLB);
+        customButton(btnCapNhat);
+        JLabel lb = new JLabel("Menu");
+        lb.setFont(new Font("Trebuchet MS", Font.ITALIC, 20));
 
-        pnChucNang.add(btnQuanLy);
-        pnChucNang.add(btnDanhSach);
-        pnChucNang.add(btnThongTin);
-        pnChucNang.add(btnThoat);
+        pn1.add(btnQuanLy);
+        pn1.add(btnDanhSach);
+        pn1.add(btnThongTin);
+        pn2.add(btnCLB);
+        pn2.add(btnCapNhat);
+        pn2.add(btnThoat);
+        pnChucNang.add(Box.createVerticalGlue());
+        //pnChucNang.add(lb);
+        pnChucNang.add(pn1);
+        pnChucNang.add(pn2);
+        pnChucNang.add(Box.createVerticalGlue());
+        pnChucNang.add(Box.createVerticalGlue());
         pnChucNang.setBackground(new Color(165, 213, 255));
         pnChucNang.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
@@ -92,9 +113,9 @@ public class MainUI extends JFrame {
         btn.setIconTextGap(10);
         btn.setHorizontalTextPosition(JButton.CENTER);
         btn.setVerticalTextPosition(JButton.BOTTOM);
-        btn.setFont(new Font("Bahnschrift", Font.BOLD, 15));
+        btn.setFont(new Font("Bahnschrift", Font.BOLD, 20));
         btn.setBackground(Color.WHITE);
-        btn.setPreferredSize(new Dimension(220, 150));
+        btn.setPreferredSize(new Dimension(220, 170));
         btn.setBorder(BorderFactory.createRaisedBevelBorder());
     }
 
@@ -117,6 +138,8 @@ public class MainUI extends JFrame {
     //Show window
     public void showWindows(){
         setTitle("Quản lý sinh viên");
+        setExtendedState(MAXIMIZED_BOTH);
+        setUndecorated(true);
         setResizable(false);
         setSize(width, height);
         setLocationRelativeTo(null);
