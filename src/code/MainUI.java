@@ -32,7 +32,7 @@ public class MainUI extends JFrame {
         lbThongTin.setVerticalAlignment(JLabel.CENTER);
         lbThongTin.setFont(new Font("Bahnschrift", Font.BOLD, 50));
         //lbThongTin.setForeground(Color.WHITE);
-        JLabel lbCreatedBy = new JLabel("Created by nhp1807");
+        JLabel lbCreatedBy = new JLabel("Version 1.0");
         lbCreatedBy.setHorizontalAlignment(JLabel.CENTER);
         lbCreatedBy.setVerticalAlignment(JLabel.CENTER);
         lbCreatedBy.setFont(new Font("Trebuchet MS", Font.ITALIC, 14));
@@ -56,11 +56,15 @@ public class MainUI extends JFrame {
         JPanel pnChucNang = new JPanel();
         pnChucNang.setLayout(new BoxLayout(pnChucNang, BoxLayout.Y_AXIS));
         JPanel pn1 = new JPanel();
-        pn1.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        pn1.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         pn1.setBackground(new Color(165, 213, 255));
         JPanel pn2 = new JPanel();
         pn2.setBackground(new Color(165, 213, 255));
-        pn2.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 0));
+        pn2.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
+        JPanel pn3 = new JPanel();
+        pn3.setLayout(new FlowLayout(FlowLayout.CENTER));
+        pn3.setBackground(new Color(165, 213, 255));
+
         btnQuanLy = new JButton("Quản lý");
         btnQuanLy.setIcon(new ImageIcon(Objects.requireNonNull(MainUI.class.getResource("/image/home.png"))));
         btnDanhSach = new JButton("Danh sách");
@@ -80,7 +84,7 @@ public class MainUI extends JFrame {
         customButton(btnCLB);
         customButton(btnCapNhat);
         JLabel lb = new JLabel("Menu");
-        lb.setFont(new Font("Trebuchet MS", Font.ITALIC, 20));
+        lb.setFont(new Font("Trebuchet MS", Font.BOLD, 25));
 
         pn1.add(btnQuanLy);
         pn1.add(btnDanhSach);
@@ -88,11 +92,11 @@ public class MainUI extends JFrame {
         pn2.add(btnCLB);
         pn2.add(btnCapNhat);
         pn2.add(btnThoat);
+        pn3.add(lb);
         pnChucNang.add(Box.createVerticalGlue());
-        //pnChucNang.add(lb);
+        pnChucNang.add(pn3);
         pnChucNang.add(pn1);
         pnChucNang.add(pn2);
-        pnChucNang.add(Box.createVerticalGlue());
         pnChucNang.add(Box.createVerticalGlue());
         pnChucNang.setBackground(new Color(165, 213, 255));
         pnChucNang.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -110,12 +114,12 @@ public class MainUI extends JFrame {
     //Function
     public void customButton(JButton btn){
         btn.setFocusable(false);
-        btn.setIconTextGap(10);
+        btn.setIconTextGap(20);
         btn.setHorizontalTextPosition(JButton.CENTER);
         btn.setVerticalTextPosition(JButton.BOTTOM);
-        btn.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+        btn.setFont(new Font("Bahnschrift", Font.BOLD, 25));
         btn.setBackground(Color.WHITE);
-        btn.setPreferredSize(new Dimension(220, 170));
+        btn.setPreferredSize(new Dimension(300, 250));
         btn.setBorder(BorderFactory.createRaisedBevelBorder());
     }
 
