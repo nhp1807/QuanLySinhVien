@@ -1,5 +1,8 @@
 package code;
 
+import Model.SinhVien;
+import connect.Service;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -10,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
+import java.util.Vector;
 
 public class quanlyUI extends JFrame {
     private JButton btnThem, btnXoa, btnSua, btnThoat;
@@ -17,6 +21,7 @@ public class quanlyUI extends JFrame {
     private JTable tblDanhSach;
     private JLabel lblSearch;
     private JTextField txtSearch;
+    private Vector<SinhVien> dsSinhVien;
     private int rowSelected = -1;
 
     public quanlyUI(String title){
@@ -32,8 +37,8 @@ public class quanlyUI extends JFrame {
         pnDanhSach.setBorder(BorderFactory.createEmptyBorder(0,20,20,20));
         dtmTableDanhSach = new DefaultTableModel();
         dtmTableDanhSach.addColumn("Họ tên");
-        dtmTableDanhSach.addColumn("MSSV");
         dtmTableDanhSach.addColumn("Khoá");
+        dtmTableDanhSach.addColumn("MSSV");
         dtmTableDanhSach.addColumn("Lớp");
         dtmTableDanhSach.addColumn("GPA");
         dtmTableDanhSach.addColumn("ĐRL");
@@ -46,17 +51,20 @@ public class quanlyUI extends JFrame {
         headerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tblDanhSach.setDefaultEditor(Object.class, null);
         tblDanhSach.getColumnModel().getColumn(0).setPreferredWidth(150);
+        tblDanhSach.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblDanhSach.getColumnModel().getColumn(2).setPreferredWidth(50);
+        tblDanhSach.getColumnModel().getColumn(3).setPreferredWidth(20);
         tblDanhSach.getColumnModel().getColumn(4).setPreferredWidth(10);
         tblDanhSach.getColumnModel().getColumn(5).setPreferredWidth(10);
-        tblDanhSach.getColumnModel().getColumn(3).setPreferredWidth(50);
-        tblDanhSach.getColumnModel().getColumn(2).setPreferredWidth(10);
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        rightRenderer.setHorizontalAlignment(JLabel.CENTER);
         tblDanhSach.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
         tblDanhSach.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
         tblDanhSach.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
         tblDanhSach.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+        tblDanhSach.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
         JScrollPane scrollDanhSach = new JScrollPane(tblDanhSach, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        hienThiDanhSachSinhVien();
         pnDanhSach.add(scrollDanhSach, BorderLayout.CENTER);
 
 
@@ -122,6 +130,57 @@ public class quanlyUI extends JFrame {
 
     }
 
+    private void docDuLieu(){
+        dsSinhVien = Service.layDanhSachSinhVien();
+    }
+
+    public void locThongTin(){
+        docDuLieu();
+        String duLieuLoc = txtSearch.getText();
+        Vector<SinhVien> dsSinhVienDaLoc = new Vector<>();
+        for (SinhVien sinhVien : dsSinhVien){
+            if (sinhVien.getTen().toUpperCase().contains(duLieuLoc.toUpperCase())
+                || sinhVien.getMssv().toUpperCase().contains(duLieuLoc.toUpperCase())){
+                dsSinhVienDaLoc.add(sinhVien);
+            }
+            if (duLieuLoc.trim().length() > 0){
+                hienThiDanhSachSinhVien(dsSinhVienDaLoc);
+            }
+            else {
+                hienThiDanhSachSinhVien();
+            }
+        }
+    }
+
+    private void hienThiDanhSachSinhVien(){
+        docDuLieu();
+        dtmTableDanhSach.setRowCount(0);
+        for (SinhVien sinhVien : dsSinhVien){
+            Vector<Object> vec = new Vector<>();
+            vec.add(sinhVien.getTen());
+            vec.add(sinhVien.getKhoa());
+            vec.add(sinhVien.getMssv());
+            vec.add(sinhVien.getLop());
+            vec.add(sinhVien.getGpa());
+            vec.add(sinhVien.getDrl());
+            dtmTableDanhSach.addRow(vec);
+        }
+    }
+
+    private void hienThiDanhSachSinhVien(Vector<SinhVien> dsSinhVienDaLoc){
+        dtmTableDanhSach.setRowCount(0);
+        for (SinhVien sinhVien : dsSinhVienDaLoc){
+            Vector<Object> vec = new Vector<>();
+            vec.add(sinhVien.getTen());
+            vec.add(sinhVien.getKhoa());
+            vec.add(sinhVien.getMssv());
+            vec.add(sinhVien.getLop());
+            vec.add(sinhVien.getGpa());
+            vec.add(sinhVien.getDrl());
+            dtmTableDanhSach.addRow(vec);
+        }
+    }
+
     private void addEvents(){
         btnThem.addActionListener(new ActionListener() {
             @Override
@@ -135,7 +194,15 @@ public class quanlyUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 rowSelected = tblDanhSach.getSelectedRow();
                 if (rowSelected != -1){
-
+                    String mssv = (String) tblDanhSach.getValueAt(rowSelected,2);
+                    int chon = JOptionPane.showConfirmDialog(quanlyUI.this,"Xac nhan xoa?","Confirm",JOptionPane.YES_NO_OPTION);
+                    if (chon == JOptionPane.YES_OPTION){
+                        boolean status = Service.xoaMonAn(mssv);
+                        if (status){
+                            locThongTin();
+                            JOptionPane.showMessageDialog(quanlyUI.this,"Xoa mon an thanh cong");
+                        }
+                    }
                 }
                 else{
                     JOptionPane.showMessageDialog(quanlyUI.this, "Vui lòng chọn thông tin muốn xoá!");
@@ -161,17 +228,17 @@ public class quanlyUI extends JFrame {
         txtSearch.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-
+                locThongTin();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-
+                locThongTin();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-
+                locThongTin();
             }
         });
 
