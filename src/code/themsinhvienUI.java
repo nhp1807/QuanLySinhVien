@@ -157,7 +157,7 @@ public class themsinhvienUI extends JFrame {
                                             if (status) {
                                                 JOptionPane.showMessageDialog(themsinhvienUI.this, "Thêm sinh viên thành công !");
                                                 setVisible(false);
-                                                //new quanlyUI();
+                                                new quanlyUI();
                                             }
                                         } else if (drl != null && drl.equals("")) {
                                             JOptionPane.showMessageDialog(themsinhvienUI.this, "Điểm rèn luyện không được để trống", "Waring", JOptionPane.WARNING_MESSAGE);
