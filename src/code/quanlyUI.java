@@ -186,6 +186,7 @@ public class quanlyUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new themsinhvienUI();
+                setVisible(false);
             }
         });
 
