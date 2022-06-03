@@ -56,13 +56,13 @@ public class quanlyUI extends JFrame {
         tblDanhSach.getColumnModel().getColumn(3).setPreferredWidth(20);
         tblDanhSach.getColumnModel().getColumn(4).setPreferredWidth(10);
         tblDanhSach.getColumnModel().getColumn(5).setPreferredWidth(10);
-        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-        rightRenderer.setHorizontalAlignment(JLabel.CENTER);
-        tblDanhSach.getColumnModel().getColumn(1).setCellRenderer(rightRenderer);
-        tblDanhSach.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
-        tblDanhSach.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
-        tblDanhSach.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
-        tblDanhSach.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tblDanhSach.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        tblDanhSach.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        tblDanhSach.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+        tblDanhSach.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
+        tblDanhSach.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
         JScrollPane scrollDanhSach = new JScrollPane(tblDanhSach, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         hienThiDanhSachSinhVien();
         pnDanhSach.add(scrollDanhSach, BorderLayout.CENTER);
@@ -185,7 +185,7 @@ public class quanlyUI extends JFrame {
         btnThem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                new themsinhvienUI();
             }
         });
 
